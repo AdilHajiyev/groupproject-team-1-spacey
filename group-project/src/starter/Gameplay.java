@@ -111,6 +111,8 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 	
 	//variables for enemy
 	private int enemyHitCount = 0;
+	private int enemyHitNum=0; // for comp129
+	private int enemyMissNum=0; // for comp129
 	private int enemyFireDelay = 0;
 	private int enemyFireDelayReach = 100;
 	private GImage endOfScreenEnemy = new GImage("singlePlayerLoseScreen.png", 0, 900);
@@ -685,12 +687,15 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 		add(scoreboardScreen);
 		add(scoreReturnMainMenuButton);
 		for(int i = 0; i < singlePlayerScores.size(); i++) {
-			GLabel score = new GLabel("Score: " + singlePlayerScores.get(i), 900, 300 + (i * 100)); 
+			GLabel score = new GLabel("Score: " + singlePlayerScores.get(i) , 900, 300 + (i * 100)); 
 			score.setFont("AgencyFB-Bold-50");
 			add(score);
 			GLabel gameNumber = new GLabel("Game # " + (i + 1), 500, 300 + (i * 100));
 			gameNumber.setFont("AgencyFB-BOLD-50");
 			add(gameNumber);
+			GLabel playerHits = new GLabel("Times Shot: " + (enemyHitNum+enemyMissNum)+", Hits: "+ enemyHitNum + ", Misses: " + enemyMissNum , 500, 700); // for comp 129 
+			playerHits.setFont("AgencyFB-Bold-50"); // for comp129
+			add(playerHits); // for comp129
 		}
 	}
 	
@@ -863,6 +868,7 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 						animateHit(coordX, coordY);
 						singlePlayerProjectiles.remove(temp);
 						enemyHitCount++;
+						enemyHitNum++; //for comp129
 						calculateScore();
 						displayScoreInGame();
 					
@@ -871,17 +877,22 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 					if(endOfScreenUser==getElementAt(coordX,coordY)) {
 						remove(temp.getProjectilePic());
 						singlePlayerProjectiles.remove(temp);
+						enemyMissNum++;
+						
 					}
 				}
 				if(getElementAt(coordX,coordY)==Shield1) {
 					//remove(Shield1);
 					remove(temp.getProjectilePic());
 					singlePlayerProjectiles.remove(temp);
+					enemyMissNum++;
+					
 				}
 				else if(getElementAt(coordX,coordY)==Shield2) {
 					//remove(Shield2);
 					remove(temp.getProjectilePic());
 					singlePlayerProjectiles.remove(temp);
+					enemyMissNum++;
 				}
 				//remove(getElementAt(coordX, coordY));
 				//singlePlayerProjectiles.remove(temp);
