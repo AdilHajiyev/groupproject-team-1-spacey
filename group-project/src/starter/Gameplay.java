@@ -688,6 +688,14 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 		scoreboardScreen.setSize(1600,900);
 		add(scoreboardScreen);
 		add(scoreReturnMainMenuButton);
+		GLabel playerHits = new GLabel("Times Shot(Player): " + (enemyHitNum+enemyMissNum)+", Hits: "+ enemyHitNum + ", Misses: " + enemyMissNum, 50, 400); // for comp 129 
+		playerHits.setFont("AgencyFB-Bold-20"); // for comp129
+		playerHits.setColor(Color.blue); // for comp129
+		add(playerHits); // for comp129
+		GLabel enemyHits = new GLabel("Times Shot(Enemies): " + (playerHitNum+playerMissNum)+", Hits: "+ playerHitNum + ", Misses: " + playerMissNum , 50, 500); // for comp 129 
+		enemyHits.setFont("AgencyFB-Bold-20"); // for comp129
+		enemyHits.setColor(Color.red); // for comp129
+		add(enemyHits); // for comp129
 		for(int i = 0; i < singlePlayerScores.size(); i++) {
 			GLabel score = new GLabel("Score: " + singlePlayerScores.get(i) , 900, 300 + (i * 100)); 
 			score.setFont("AgencyFB-Bold-50");
@@ -695,16 +703,9 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 			GLabel gameNumber = new GLabel("Game # " + (i + 1), 500, 300 + (i * 100));
 			gameNumber.setFont("AgencyFB-BOLD-50");
 			add(gameNumber);
-			GLabel playerHits = new GLabel("Times Shot(Player): " + (enemyHitNum+enemyMissNum)+", Hits: "+ enemyHitNum + ", Misses: " + enemyMissNum , 50, 400); // for comp 129 
-			playerHits.setFont("AgencyFB-Bold-30"); // for comp129
-			playerHits.setColor(Color.blue); // for comp129
-			add(playerHits); // for comp129
-			GLabel enemyHits = new GLabel("Times Shot(Enemies): " + (playerHitNum+playerMissNum)+", Hits: "+ playerHitNum + ", Misses: " + playerMissNum , 50, 500); // for comp 129 
-			enemyHits.setFont("AgencyFB-Bold-30"); // for comp129
-			enemyHits.setColor(Color.red); // for comp129
-			add(enemyHits); // for comp129
 		}
 	}
+	
 	
 	public void displayBonusScreen() { //Displays the bonus screen
 		bonusScreenTimer.start();
@@ -764,6 +765,14 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 		GLabel scoreLabel = new GLabel(" " + singlePlayerScores.get(gameNumber),700,350);
 		scoreLabel.setFont("AgencyFB-BOLD-50");
 		add(scoreLabel);
+		GLabel playerHits = new GLabel("Times Shot(Player): " + (enemyHitNum+enemyMissNum)+", Hits: "+ enemyHitNum + ", Misses: " + enemyMissNum, 50, 400); // for comp 129 
+		playerHits.setFont("AgencyFB-Bold-20"); // for comp129
+		playerHits.setColor(Color.blue); // for comp129
+		add(playerHits); // for comp129
+		GLabel enemyHits = new GLabel("Times Shot(Enemies): " + (playerHitNum+playerMissNum)+", Hits: "+ playerHitNum + ", Misses: " + playerMissNum , 50, 500); // for comp 129 
+		enemyHits.setFont("AgencyFB-Bold-20"); // for comp129
+		enemyHits.setColor(Color.red); // for comp129
+		add(enemyHits); // for comp129
 	}
 	
 	public void enemyMovement() { //controls the enemy movement mechanics
