@@ -102,7 +102,8 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 	private ArrayList<Projectile> singlePlayerProjectiles = new ArrayList<Projectile>();
 	private ArrayList<Projectile> enemyProjectiles = new ArrayList<Projectile>();
 	private int playerHitNum=0; //for tracking the number of times enemy projectile hit the player comp129
-	private int playerMissNum=0; //for tracking the number of times enemy projectile missed the player comp129
+	private int playerShotNum=0; //for tracking the number of times enemy shoots comp129
+	//private int playerMissNum=0; //for tracking the number of times enemy projectile missed the player comp129
 
 	
 	//picture for the shield and enemyTanks
@@ -114,7 +115,8 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 	//variables for enemy
 	private int enemyHitCount = 0;
 	private int enemyHitNum=0; // for tracking the number of times player projectile hit enemies comp129
-	private int enemyMissNum=0; // for tracking the number of times player projectile missed enemies comp129
+	private int enemyShotNum=0; // for tracking the number of times player shoots comp129
+	//private int enemyMissNum=0; // for tracking the number of times player projectile missed enemies comp129
 	private int enemyFireDelay = 0;
 	private int enemyFireDelayReach = 100;
 	private GImage endOfScreenEnemy = new GImage("singlePlayerLoseScreen.png", 0, 900);
@@ -688,11 +690,11 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 		scoreboardScreen.setSize(1600,900);
 		add(scoreboardScreen);
 		add(scoreReturnMainMenuButton);
-		GLabel playerHits = new GLabel("Times Shot(Player): " + (enemyHitNum+enemyMissNum)+", Hits: "+ enemyHitNum + ", Misses: " + enemyMissNum, 50, 400); // for comp 129 
+		GLabel playerHits = new GLabel("Times Shot(Player): " + enemyShotNum+", Hits: "+ enemyHitNum+", Misses: " + (enemyShotNum-enemyHitNum), 50, 400); // for comp 129 
 		playerHits.setFont("AgencyFB-Bold-20"); // for comp129
 		playerHits.setColor(Color.blue); // for comp129
 		add(playerHits); // for comp129
-		GLabel enemyHits = new GLabel("Times Shot(Enemies): " + (playerHitNum+playerMissNum)+", Hits: "+ playerHitNum + ", Misses: " + playerMissNum , 50, 500); // for comp 129 
+		GLabel enemyHits = new GLabel("Times Shot(Enemies): " + playerShotNum + ", Hits: "+ playerHitNum +", Misses: " + (playerShotNum-playerHitNum), 50, 500); // for comp 129 
 		enemyHits.setFont("AgencyFB-Bold-20"); // for comp129
 		enemyHits.setColor(Color.red); // for comp129
 		add(enemyHits); // for comp129
@@ -750,6 +752,15 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 		GLabel scoreLabel = new GLabel(" " + singlePlayerScores.get(gameNumber),700,350);
 		scoreLabel.setFont("AgencyFB-BOLD-50");
 		add(scoreLabel);
+		
+		GLabel playerHits = new GLabel("Times Shot(Player): " + enemyShotNum +", Hits: "+ enemyHitNum +", Misses: " + (enemyShotNum-enemyHitNum), 50, 400); // for comp 129 
+		playerHits.setFont("AgencyFB-Bold-20"); // for comp129
+		playerHits.setColor(Color.blue); // for comp129
+		add(playerHits); // for comp129
+		GLabel enemyHits = new GLabel("Times Shot(Enemies): " + playerShotNum +", Hits: "+ playerHitNum +", Misses: " + (playerShotNum-playerHitNum), 50, 500); // for comp 129 
+		enemyHits.setFont("AgencyFB-Bold-20"); // for comp129
+		enemyHits.setColor(Color.red); // for comp129
+		add(enemyHits); // for comp129
 	}
 	
 	public void userLose() { //displays the screen when the user loses
@@ -765,11 +776,11 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 		GLabel scoreLabel = new GLabel(" " + singlePlayerScores.get(gameNumber),700,350);
 		scoreLabel.setFont("AgencyFB-BOLD-50");
 		add(scoreLabel);
-		GLabel playerHits = new GLabel("Times Shot(Player): " + (enemyHitNum+enemyMissNum)+", Hits: "+ enemyHitNum + ", Misses: " + enemyMissNum, 50, 400); // for comp 129 
+		GLabel playerHits = new GLabel("Times Shot(Player): " + enemyShotNum + ", Hits: "+ enemyHitNum +", Misses: " + (enemyShotNum-enemyHitNum), 50, 400); // for comp 129 
 		playerHits.setFont("AgencyFB-Bold-20"); // for comp129
 		playerHits.setColor(Color.blue); // for comp129
 		add(playerHits); // for comp129
-		GLabel enemyHits = new GLabel("Times Shot(Enemies): " + (playerHitNum+playerMissNum)+", Hits: "+ playerHitNum + ", Misses: " + playerMissNum , 50, 500); // for comp 129 
+		GLabel enemyHits = new GLabel("Times Shot(Enemies): " + playerShotNum +", Hits: "+ playerHitNum +", Misses: " + (playerShotNum-playerHitNum) , 50, 500); // for comp 129 
 		enemyHits.setFont("AgencyFB-Bold-20"); // for comp129
 		enemyHits.setColor(Color.red); // for comp129
 		add(enemyHits); // for comp129
@@ -801,6 +812,7 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 		singlePlayerProjectiles.add(temp);
 		userFirePic.setLocation(singlePlayerTank.getX() + 9, singlePlayerTank.getY() - 45);
 		add(userFirePic);
+		enemyShotNum++;
 	}
 	public void singlePlayerMoveProjectile() {
 		for (Projectile temp:singlePlayerProjectiles) {
@@ -819,6 +831,7 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 				enemyFirePic.setLocation(tempImage.getX() - 10, tempImage.getY() + 20);
 				enemyMuzzleImages.add(enemyFirePic);
 				add(enemyFirePic);
+				playerShotNum++;
 			}
 		}
 	}
@@ -893,7 +906,7 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 					if(endOfScreenUser==getElementAt(coordX,coordY)) {
 						remove(temp.getProjectilePic());
 						singlePlayerProjectiles.remove(temp);
-						enemyMissNum++;
+						//enemyMissNum++; //for comp129
 						
 					}
 				}
@@ -901,14 +914,14 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 					//remove(Shield1);
 					remove(temp.getProjectilePic());
 					singlePlayerProjectiles.remove(temp);
-					enemyMissNum++;
+					//enemyMissNum++; //for comp129
 					
 				}
 				else if(getElementAt(coordX,coordY)==Shield2) {
 					//remove(Shield2);
 					remove(temp.getProjectilePic());
 					singlePlayerProjectiles.remove(temp);
-					enemyMissNum++;
+					//enemyMissNum++; //for comp129
 				}
 				//remove(getElementAt(coordX, coordY));
 				//singlePlayerProjectiles.remove(temp);
@@ -937,7 +950,7 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 					if(endOfScreenEnemy==getElementAt(coordX,coordY)) {
 						remove(temp.getEnemyProjectilePic());
 						enemyProjectiles.remove(temp);
-						playerMissNum++; //comp 129
+						//playerMissNum++; //comp 129
 					}
 				}
 				if(getElementAt(coordX,coordY)==Shield1) {
@@ -945,14 +958,14 @@ public class Gameplay extends GraphicsProgram implements ActionListener,KeyListe
 					remove(temp.getEnemyProjectilePic());
 					animateHit(coordX, coordY);
 					enemyProjectiles.remove(temp);
-					playerMissNum++; //comp 129
+					//playerMissNum++; //comp 129
 				}
 				else if(getElementAt(coordX,coordY)==Shield2) {
 					//remove(Shield2);
 					remove(temp.getEnemyProjectilePic());
 					animateHit(coordX, coordY);
 					enemyProjectiles.remove(temp);
-					playerMissNum++; //comp 129
+					//playerMissNum++; //comp 129
 				}
 				//remove(getElementAt(coordX, coordY));
 				//singlePlayerProjectiles.remove(temp);
